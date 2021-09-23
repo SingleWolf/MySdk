@@ -10,8 +10,10 @@ import com.walker.log.BuildConfig;
 import com.walker.log.xlog.Log;
 import com.walker.log.xlog.Options;
 import com.walker.log.xlog.Xlog;
+import com.walker.protect.helper.IProtector;
+import com.walker.protect.helper.Protector;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements IProtector{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,5 +71,11 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
         Log.i("Xlog","onPause()");
+    }
+
+    @Override
+    @Protector(level = 1,resultType = 1)
+    public void onProtect(String msg) {
+        Log.i("Protect",msg);
     }
 }

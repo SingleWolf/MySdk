@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 rootProject.name = "MySdk"
 include ':app'
 include ':log'
+include ':protect'
