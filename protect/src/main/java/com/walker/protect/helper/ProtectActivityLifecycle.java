@@ -17,7 +17,11 @@ public class ProtectActivityLifecycle implements Application.ActivityLifecycleCa
 
     private ProtectTransact mTransact;
 
-    private static final int RANDOM_MAX = 20;
+    private static final int RANDOM_MAX = 10;
+
+    private int randomMax = RANDOM_MAX;
+
+    private boolean isDefaultCheck;
 
     private int randomCount = 0;
 
@@ -67,18 +71,37 @@ public class ProtectActivityLifecycle implements Application.ActivityLifecycleCa
         if (activity instanceof IProtector) {
             mTransact.transact(activity);
         } else {
-            if (randomCount < RANDOM_MAX) {
+            if (isDefaultCheck) {
                 checkRandom();
             }
         }
     }
 
     private void checkRandom() {
+        if (randomMax <= randomCount) {
+            return;
+        }
         int value = (int) (1 + Math.random() * (10 - 1 + 1));
         Log.d("Protect", "random value = " + value);
         if (value % 4 == 0) {
             randomCount++;
             mTransact.check();
         }
+    }
+
+    public int getRandomMax() {
+        return randomMax;
+    }
+
+    public void setRandomMax(int randomMax) {
+        this.randomMax = randomMax;
+    }
+
+    public boolean isDefaultCheck() {
+        return isDefaultCheck;
+    }
+
+    public void setDefaultCheck(boolean defaultCheck) {
+        isDefaultCheck = defaultCheck;
     }
 }

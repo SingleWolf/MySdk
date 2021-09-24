@@ -16,6 +16,7 @@ public class InitContentProvider extends ContentProvider {
     public boolean onCreate() {
         Application application = (Application) getContext();
         ProtectHelper.init(application);
+        ProtectHelper.getInstance().setDefaultCheck(true);
         return true;
     }
 

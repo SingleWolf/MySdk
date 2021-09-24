@@ -38,4 +38,25 @@ public class ProtectHelper {
         protectActivityLifecycle = new ProtectActivityLifecycle(application);
         application.registerActivityLifecycleCallbacks(protectActivityLifecycle);
     }
+
+
+    public static ProtectHelper getInstance() {
+        return instance;
+    }
+
+    public int getRandomMax() {
+        return protectActivityLifecycle.getRandomMax();
+    }
+
+    public void setRandomMax(int randomMax) {
+        protectActivityLifecycle.setRandomMax(randomMax);
+    }
+
+    public boolean isDefaultCheck() {
+        return protectActivityLifecycle.isDefaultCheck();
+    }
+
+    public void setDefaultCheck(boolean defaultCheck) {
+        protectActivityLifecycle.setDefaultCheck(defaultCheck);
+    }
 }
