@@ -3,6 +3,9 @@ package com.walker.mysdk;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -12,12 +15,21 @@ import com.walker.log.xlog.Options;
 import com.walker.log.xlog.Xlog;
 import com.walker.protect.helper.IProtector;
 import com.walker.protect.helper.Protector;
+import com.walker.safecopy.SafeCopy;
+import com.walker.safecopy.SafeCopyHelper;
 
-public class MainActivity extends Activity implements IProtector{
+public class MainActivity extends Activity implements IProtector {
+
+    private EditText etInput;
+    private TextView tvShow;
+    private SafeCopy safeCopy = new SafeCopy();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        etInput = (EditText) findViewById(R.id.etInput);
+        tvShow = (TextView) findViewById(R.id.tvShow);
         onLog();
     }
 
@@ -51,31 +63,46 @@ public class MainActivity extends Activity implements IProtector{
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("Xlog","onResume()");
+        Log.i("Xlog", "onResume()");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("Xlog","onDestroy()");
+        Log.i("Xlog", "onDestroy()");
         Log.appenderClose();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i("Xlog","onStart()");
+        Log.i("Xlog", "onStart()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("Xlog","onPause()");
+        Log.i("Xlog", "onPause()");
     }
 
     @Override
-    @Protector(level = 1,resultType = 1)
+    @Protector(level = 1, resultType = 1)
     public void onProtect(String msg) {
-        Log.i("Protect",msg);
+        Log.i("Protect", msg);
+    }
+
+    public void onRead(View view) {
+        String content = "";
+        try {
+            content = safeCopy.getContent(this.getApplicationContext());
+        } catch (Exception e) {
+            content = e.toString();
+        }
+        tvShow.setText(content);
+    }
+
+    public void onWrite(View view) {
+        String content = etInput.getText().toString().trim();
+        safeCopy.putContent(this.getApplicationContext(), content);
     }
 }
