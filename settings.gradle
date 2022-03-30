@@ -1,12 +1,6 @@
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
 rootProject.name = "MySdk"
 include ':app'
 include ':log'
 include ':protect'
 include ':safecopy'
+include ':privacy'

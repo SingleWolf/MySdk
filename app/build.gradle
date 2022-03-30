@@ -1,6 +1,4 @@
-plugins {
-    id 'com.android.application'
-}
+apply plugin: 'com.android.application'
 
 android {
     compileSdk 30
@@ -17,7 +15,7 @@ android {
 
         // 指定CPU架构，打入APK lib/CPU平台
         ndk {
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi-v7a",'arm64-v8a'
         }
     }
 
@@ -31,6 +29,25 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+apply plugin: 'check.native.plugin'
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        //自定义插件maven地址
+        maven { url '../repo/privacy_repo' }
+    }
+    dependencies {
+        //加载自定义插件 group + module + version
+        classpath 'com.walker.plugin:privacy:1.0.0'
+    }
+}
+
+PrivacyExt{
+    enable64Bit true
+    taskName ''
 }
 
 dependencies {
